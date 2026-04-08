@@ -113,6 +113,7 @@ export default function Home() {
   const [fecha, setFecha] = useState("");
   const [observaciones, setObservaciones] = useState("");
   const [checks, setChecks] = useState<Record<string, boolean>>({});
+  const [sectionObservations, setSectionObservations] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [status, setStatus] = useState<{ type: "success" | "error"; message: string } | null>(null);
   const [showExitModal, setShowExitModal] = useState(false);
@@ -123,6 +124,10 @@ export default function Home() {
 
   const handleToggle = (key: string) => {
     setChecks(prev => ({ ...prev, [key]: !prev[key] }));
+  };
+
+  const handleSectionObservationChange = (sectionId: string, value: string) => {
+    setSectionObservations(prev => ({ ...prev, [sectionId]: value }));
   };
 
   const handleSelectAll = (sectionId: string) => {
@@ -155,6 +160,7 @@ export default function Home() {
   const resetForm = () => {
     setGerente("");
     setChecks({});
+    setSectionObservations({});
     setObservaciones("");
     setStatus(null);
   };
@@ -181,6 +187,7 @@ export default function Home() {
           gerente,
           fecha,
           checks,
+          sectionObservations,
           observaciones
         })
       });
@@ -312,6 +319,8 @@ export default function Home() {
                 checkedItems={checks}
                 onToggle={handleToggle}
                 onSelectAll={handleSelectAll}
+                observationValue={sectionObservations[section.id] || ""}
+                onObservationChange={handleSectionObservationChange}
               />
             ))}
           </div>
@@ -356,26 +365,27 @@ export default function Home() {
               </div>
             )}
 
-            <button
-              type="submit"
-              disabled={submitting || completedCount < TOTAL_ITEMS}
-              className={`neo-btn w-full py-5 text-xl relative group ${
-                completedCount < TOTAL_ITEMS ? "opacity-50 grayscale cursor-not-allowed" : "bg-[#0047b3]"
-              }`}
-            >
-              {submitting ? (
-                <Loader2 className="animate-spin" size={24} />
-              ) : (
-                <>
-                  <span>ENVIAR REPORTE {sala}</span>
-                  <Send size={24} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-                </>
-              )}
-            </button>
-            {completedCount < TOTAL_ITEMS && (
-              <p className="text-center mt-3 text-xs font-black text-gray-400 uppercase tracking-widest">
-                Faltan {TOTAL_ITEMS - completedCount} ítems para habilitar envío
-              </p>
+            {completedCount === TOTAL_ITEMS ? (
+              <button
+                type="submit"
+                disabled={submitting}
+                className="neo-btn w-full py-5 text-xl relative group bg-[#0047b3]"
+              >
+                {submitting ? (
+                  <Loader2 className="animate-spin" size={24} />
+                ) : (
+                  <>
+                    <span>ENVIAR REPORTE {sala}</span>
+                    <Send size={24} className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+                  </>
+                )}
+              </button>
+            ) : (
+              <div className="neo-card bg-gray-100 p-4 text-center border-dashed border-gray-300">
+                <p className="text-xs font-black text-gray-400 uppercase tracking-widest">
+                  Faltan {TOTAL_ITEMS - completedCount} ítems para habilitar envío
+                </p>
+              </div>
             )}
           </div>
         </form>

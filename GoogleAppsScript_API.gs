@@ -59,9 +59,18 @@ var HEADERS = [
   "6.5 Detectar oportunidades de fidelización",
   "6.6 Registrar comentarios del cliente útiles para futuras acciones",
   "6.7 Monitorear competencia / eventos externos si impactan en la sala",
-  // Observaciones
+  // Observaciones por sección
+  "Obs. Apertura",
+  "Obs. Seguridad",
+  "Obs. Slots",
+  "Obs. Experiencia",
+  "Obs. Personal",
+  "Obs. Comercial",
+  // Observaciones final
   "Observaciones Importantes"
 ];
+
+var OBS_KEYS = ["apertura", "seguridad", "slots", "experiencia", "personal", "comercial"];
 
 // Orden de claves de los checkboxes (debe coincidir con el frontend)
 var CHECK_KEYS = [
@@ -123,6 +132,11 @@ function guardarChecklist(datos) {
 
     CHECK_KEYS.forEach(function(k) {
       row.push(datos.checks[k] ? "✓" : "✗");
+    });
+
+    // Observaciones por sección
+    OBS_KEYS.forEach(function(k) {
+      row.push(datos.sectionObservations ? (datos.sectionObservations[k] || "") : "");
     });
 
     row.push(datos.observaciones || "");

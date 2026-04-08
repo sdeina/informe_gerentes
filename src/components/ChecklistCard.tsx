@@ -17,6 +17,8 @@ interface ChecklistCardProps {
   checkedItems: Record<string, boolean>;
   onToggle: (key: string) => void;
   onSelectAll: (sectionId: string) => void;
+  observationValue: string;
+  onObservationChange: (sectionId: string, value: string) => void;
 }
 
 export default function ChecklistCard({
@@ -28,6 +30,8 @@ export default function ChecklistCard({
   checkedItems,
   onToggle,
   onSelectAll,
+  observationValue,
+  onObservationChange,
 }: ChecklistCardProps) {
   const completedCount = items.filter((item) => checkedItems[item.key]).length;
   const isAllDone = completedCount === items.length;
@@ -82,6 +86,19 @@ export default function ChecklistCard({
             </span>
           </div>
         ))}
+      </div>
+
+      {/* Section Observations */}
+      <div className="p-4 bg-gray-50 border-t-[2px] border-black">
+        <label className="text-[10px] font-black uppercase text-gray-400 mb-2 block">
+          ¿Observaciones en {label.split(".")[1]?.trim() || label}?
+        </label>
+        <textarea
+          value={observationValue}
+          onChange={(e) => onObservationChange(id, e.target.value)}
+          placeholder="Comentá novedades específicas de este sector..."
+          className="neo-input w-full min-h-[80px] text-sm resize-none bg-white p-3"
+        />
       </div>
     </div>
   );
