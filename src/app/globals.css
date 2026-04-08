@@ -1,0 +1,124 @@
+@import "tailwindcss";
+
+@font-face {
+  font-family: 'Outfit';
+  src: url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&display=swap');
+}
+
+:root {
+  --background: #f8f9fa;
+  --foreground: #101010;
+  --primary: #0047b3;
+  --primary-foreground: #ffffff;
+  --accent: #ffb703;
+  --border: #000000;
+  --radius: 16px;
+  --border-width: 3px;
+  --shadow: 6px 6px 0px 0px #000000;
+  --shadow-sm: 3px 3px 0px 0px #000000;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-accent: var(--accent);
+  --radius-xl: var(--radius);
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Neobrutalist components */
+.neo-card {
+  background: white;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.neo-card:active {
+  transform: translate(2px, 2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.neo-btn {
+  background: var(--primary);
+  color: white;
+  border: var(--border-width) solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  font-weight: 700;
+  padding: 1rem 2rem;
+  transition: all 0.2s;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.neo-btn:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 8px 8px 0px 0px #000;
+}
+
+.neo-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: var(--shadow-sm);
+}
+
+.neo-input {
+  border: var(--border-width) solid var(--border);
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  outline: none;
+  background: white;
+  font-size: 1rem;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.neo-input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  cursor: pointer;
+  width: 2rem;
+  height: 2rem;
+}
+
+/* Fix for inputs text overlapping left icon */
+input[type="date"].neo-input,
+.neo-input-with-icon {
+  padding-left: 3.5rem !important;
+}
+
+.neo-input:focus {
+  box-shadow: var(--shadow-sm);
+}
+
+.pill {
+  background: var(--primary);
+  color: white;
+  padding: 0.5rem 1.5rem;
+  border-radius: 999px;
+  border: var(--border-width) solid var(--border);
+  font-weight: 700;
+  font-size: 0.875rem;
+  box-shadow: var(--shadow-sm);
+}
+
+@media (max-width: 640px) {
+  :root {
+    --shadow: 4px 4px 0px 0px #000;
+    --border-width: 2px;
+  }
+}
