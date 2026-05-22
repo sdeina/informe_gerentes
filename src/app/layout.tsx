@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Informe Gerentes",
-  description: "Registro de guardia y control gerencial",
+  title: "Informe de guardia - Gerencia",
+  description: "Formulario de informe de guardia y control gerencial",
   icons: {
     icon: "/logo.png",
   },

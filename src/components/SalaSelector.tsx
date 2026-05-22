@@ -14,11 +14,12 @@ export default function SalaSelector({ onSelect }: SalaSelectorProps) {
       </div>
       
       <div className="neo-card w-full max-w-md p-8 text-center bg-white">
-        <h1 className="text-3xl font-black mb-2 tracking-tight uppercase">
-          INFORME GERENTES
+        <h1 className="text-2xl font-black mb-1 tracking-tight uppercase leading-tight">
+          Informe de guardia
         </h1>
+        <p className="text-[#0047b3] font-black uppercase text-xs tracking-widest mb-2">Gerencia</p>
         <p className="text-gray-600 mb-8 font-medium">
-          Seleccioná la sala para comenzar el reporte
+          Seleccioná la sala para comenzar el formulario
         </p>
         
         <div className="grid gap-6">
@@ -44,7 +45,13 @@ export default function SalaSelector({ onSelect }: SalaSelectorProps) {
         </div>
       </div>
       
-      <p className="mt-12 text-sm text-gray-500 font-bold uppercase tracking-widest">
+      <a
+        href="/presentacion-mejoras.html"
+        className="mt-8 text-xs font-black uppercase tracking-widest text-[#0047b3] underline underline-offset-4 hover:text-black transition-colors"
+      >
+        Ver presentación de mejoras
+      </a>
+      <p className="mt-6 text-sm text-gray-500 font-bold uppercase tracking-widest">
         Sistema de Registro Gerencial v2.0
       </p>
     </div>

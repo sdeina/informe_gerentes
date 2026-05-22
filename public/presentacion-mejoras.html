@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Informe de guardia — Mejoras y cambios</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --background: #f8f9fa;
+      --foreground: #101010;
+      --primary: #0047b3;
+      --accent: #ffb703;
+      --border: #000000;
+      --radius: 16px;
+      --border-width: 3px;
+      --shadow: 6px 6px 0px 0px #000000;
+      --shadow-sm: 3px 3px 0px 0px #000000;
+      --green-bg: #e8f5e9;
+      --orange-bg: #fff3e0;
+      --purple-bg: #ede7f6;
+      --blue-bg: #e3f2fd;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--background);
+      color: var(--foreground);
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      -webkit-font-smoothing: antialiased;
+      line-height: 1.5;
+      padding-bottom: 4rem;
+    }
+
+    .neo-card {
+      background: white;
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+    }
+
+    .neo-btn {
+      background: var(--primary);
+      color: white;
+      border: var(--border-width) solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      font-weight: 700;
+      padding: 0.875rem 1.5rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .neo-btn:hover {
+      transform: translate(-1px, -1px);
+      box-shadow: 8px 8px 0px 0px #000;
+    }
+
+    .neo-btn-accent {
+      background: var(--accent);
+      color: #000;
+    }
+
+    .pill {
+      background: var(--primary);
+      color: white;
+      padding: 0.35rem 1rem;
+      border-radius: 999px;
+      border: 2px solid var(--border);
+      font-weight: 700;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: inline-block;
+    }
+
+    .pill-accent { background: var(--accent); color: #000; }
+    .pill-green { background: var(--green-bg); color: #1b5e20; }
+    .pill-red { background: #ffebee; color: #b71c1c; }
+
+    .wrap { max-width: 52rem; margin: 0 auto; padding: 1.5rem; }
+
+    header.hero {
+      text-align: center;
+      padding: 2.5rem 1rem 2rem;
+    }
+
+    .logo-box {
+      display: inline-block;
+      padding: 1.25rem;
+      background: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .logo-box img { width: 3.5rem; height: 3.5rem; object-fit: contain; display: block; }
+
+    h1 {
+      font-size: clamp(1.75rem, 5vw, 2.5rem);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 0.5rem;
+    }
+
+    .subtitle {
+      color: var(--primary);
+      font-weight: 800;
+      text-transform: uppercase;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      margin-bottom: 0.75rem;
+    }
+
+    .lead {
+      color: #555;
+      font-weight: 600;
+      font-size: 1rem;
+      max-width: 36rem;
+      margin: 0 auto 1.5rem;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 1rem;
+      margin: 2rem 0;
+    }
+
+    .stat-card {
+      padding: 1.25rem;
+      text-align: center;
+    }
+
+    .stat-card .num {
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1;
+    }
+
+    .stat-card .lbl {
+      font-size: 0.65rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #666;
+      margin-top: 0.35rem;
+    }
+
+    section.block { margin-bottom: 1.5rem; }
+
+    .block-head {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.875rem;
+      padding: 1rem 1.25rem;
+      border-bottom: var(--border-width) solid var(--border);
+    }
+
+    .icon-box {
+      width: 2.5rem;
+      height: 2.5rem;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+
+    .block-head h2 {
+      font-size: 1.05rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .block-head p {
+      font-size: 0.8rem;
+      color: #666;
+      font-weight: 600;
+      margin-top: 0.2rem;
+    }
+
+    .block-body { padding: 1.25rem; }
+
+    ul.changes { list-style: none; }
+
+    ul.changes li {
+      position: relative;
+      padding: 0.65rem 0 0.65rem 1.75rem;
+      border-bottom: 2px solid #f0f0f0;
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    ul.changes li:last-child { border-bottom: none; }
+
+    ul.changes li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      top: 0.65rem;
+      width: 1.25rem;
+      height: 1.25rem;
+      background: var(--green-bg);
+      border: 2px solid var(--border);
+      border-radius: 6px;
+      font-size: 0.65rem;
+      font-weight: 800;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #1b5e20;
+    }
+
+    ul.changes li.removed::before {
+      content: "−";
+      background: #ffebee;
+      color: #b71c1c;
+    }
+
+    ul.changes li.new::before {
+      content: "+";
+      background: var(--accent);
+      color: #000;
+    }
+
+    .compare {
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .compare { grid-template-columns: 1fr 1fr; }
+    }
+
+    .compare-col {
+      padding: 1rem;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+    }
+
+    .compare-col.before { background: #fafafa; }
+    .compare-col.after { background: var(--green-bg); }
+
+    .compare-col h3 {
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.75rem;
+    }
+
+    .compare-col.before h3 { color: #888; }
+    .compare-col.after h3 { color: #1b5e20; }
+
+    .compare-col p, .compare-col li {
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #333;
+    }
+
+    .compare-col ul { list-style: disc; padding-left: 1.25rem; }
+    .compare-col li { margin-bottom: 0.35rem; }
+
+    .flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+      margin-top: 0.75rem;
+    }
+
+    .flow span {
+      font-size: 0.75rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      padding: 0.4rem 0.75rem;
+      border: 2px solid var(--border);
+      border-radius: 8px;
+      background: white;
+    }
+
+    .flow .arrow { border: none; background: none; padding: 0; font-size: 1rem; }
+
+    footer.actions {
+      text-align: center;
+      margin-top: 2.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+    }
+
+    .tag-row { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+
+    .section-num {
+      font-size: 0.65rem;
+      font-weight: 800;
+      color: var(--primary);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    @media print {
+      body { background: white; }
+      .neo-card { box-shadow: none; break-inside: avoid; }
+      .neo-btn { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <header class="hero">
+      <div class="neo-card logo-box">
+        <img src="/logo.png" alt="Logo" onerror="this.style.display='none'" />
+      </div>
+      <p class="subtitle">Gerencia · Presentación</p>
+      <h1>Informe de guardia</h1>
+      <p class="lead">
+        Resumen de la renovación del formulario digital: qué cambió, qué se mejoró y cómo beneficia al equipo de gerencia en sala.
+      </p>
+      <div class="tag-row" style="justify-content: center;">
+        <span class="pill">PASTEKO</span>
+        <span class="pill">STEPAKO</span>
+        <span class="pill pill-accent">Mayo 2026</span>
+      </div>
+    </header>
+
+    <div class="stats">
+      <div class="neo-card stat-card">
+        <div class="num">7</div>
+        <div class="lbl">Secciones operativas</div>
+      </div>
+      <div class="neo-card stat-card">
+        <div class="num">0</div>
+        <div class="lbl">Opciones N/A</div>
+      </div>
+      <div class="neo-card stat-card">
+        <div class="num">↯</div>
+        <div class="lbl">Comentarios inteligentes</div>
+      </div>
+      <div class="neo-card stat-card">
+        <div class="num">1</div>
+        <div class="lbl">Registro en Sheets</div>
+      </div>
+    </div>
+
+    <!-- Resumen -->
+    <section class="block neo-card">
+      <div class="block-head">
+        <div class="icon-box" style="background: var(--accent);">★</div>
+        <div>
+          <p class="section-num">Resumen</p>
+          <h2>De checklist genérico a informe operativo real</h2>
+          <p>El formulario anterior era una lista de 45 casillas iguales. El nuevo refleja la recorrida real del gerente de guardia.</p>
+        </div>
+      </div>
+      <div class="block-body">
+        <div class="compare">
+          <div class="compare-col before">
+            <h3>Antes</h3>
+            <ul>
+              <li>45 ítems tipo checklist (marcar sí/no)</li>
+              <li>6 bloques genéricos sin campos de detalle</li>
+              <li>Observaciones solo al final del informe</li>
+              <li>Misma obligatoriedad para todos los comentarios</li>
+              <li>Enfoque en máquinas, jackpots y stock TITO</li>
+            </ul>
+          </div>
+          <div class="compare-col after">
+            <h3>Ahora</h3>
+            <ul>
+              <li>Informe por secciones (0 a 6) alineado al proceso</li>
+              <li>Campos de texto, números y escalas según el caso</li>
+              <li>Comentarios solo cuando hace falta explicar</li>
+              <li>Sección dedicada a Fidelización de clientes</li>
+              <li>Registro automático en Google Sheets por sala</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- UX -->
+    <section class="block neo-card">
+      <div class="block-head">
+        <div class="icon-box" style="background: var(--blue-bg);">◎</div>
+        <div>
+          <p class="section-num">Experiencia de uso</p>
+          <h2>Mejoras en la interfaz</h2>
+          <p>Misma estética visual (neobrutalista) con lógica más clara para quien completa el turno.</p>
+        </div>
+      </div>
+      <div class="block-body">
+        <ul class="changes">
+          <li>Título unificado: <strong>Informe de guardia</strong> (Gerencia) en toda la app.</li>
+          <li>Barra de progreso dinámica: muestra solo los campos que realmente deben completarse.</li>
+          <li>Selección de sala (PASTEKO / STEPAKO) antes de comenzar.</li>
+          <li>Botón de envío habilitado únicamente cuando el informe está completo.</li>
+          <li>Confirmación al salir si hay datos sin guardar.</li>
+          <li>Diseño mobile-first: usable desde el celular en piso de sala.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Validación -->
+    <section class="block neo-card">
+      <div class="block-head">
+        <div class="icon-box" style="background: var(--green-bg);">⚡</div>
+        <div>
+          <p class="section-num">Validación inteligente</p>
+          <h2>Menos carga, más calidad de datos</h2>
+          <p>Los comentarios aparecen y se vuelven obligatorios solo cuando la respuesta lo requiere.</p>
+        </div>
+      </div>
+      <div class="block-body">
+        <ul class="changes">
+          <li><strong>Sí / No:</strong> el comentario es obligatorio solo si la respuesta es <span class="pill pill-red" style="font-size:0.6rem;padding:0.2rem 0.5rem;">No</span></li>
+          <li><strong>Escalas (Excelente / Adecuado / A mejorar):</strong> comentario obligatorio solo en Adecuado o A mejorar</li>
+          <li><strong>Clima VIP:</strong> comentario obligatorio en Neutrales o Con quejas</li>
+          <li><strong>Fidelización:</strong> detalle si hubo inconveniente, falla de sistema o queja de cliente</li>
+          <li>Eliminadas todas las opciones <strong>N/A</strong> para forzar una respuesta clara</li>
+        </ul>
+        <div class="flow">
+          <span>Respuesta</span>
+          <span class="arrow">→</span>
+          <span>¿Requiere detalle?</span>
+          <span class="arrow">→</span>
+          <span>Comentario obligatorio</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Sección 0 -->
+    <section class="block neo-card">
+      <div class="block-head">
+        <div class="icon-box" style="background: var(--blue-bg);">0</div>
+        <div>
+          <p class="section-num">Sección 0</p>
+          <h2>Registro de personal operativo</h2>
+        </div>
+      </div>
+      <div class="block-body">
+        <ul class="changes">
+          <li class="removed">Eliminados campos de responsables por puesto (Jefe de sala, Gastronomía, Técnica, Seguridad).</li>
+          <li>Se mantiene dotación planificada vs. presentes y registro de ausencias / llegadas tarde.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Sección 1-3 -->
+    <section class="block neo-card">
+      <div class="block-head">
+        <div class="icon-box" style="background: var(--green-bg);">1–3</div>
+        <div>
+          <p class="section-num">Apertura · Infraestructura · Seguridad</p>
+          <h2>Preguntas más precisas</h2>
+        </div>
+      </div>
+      <div class="block-body">
+        <ul class="changes">
+          <li class="new">1.2 Renombrado: <em>Presencia de personal en sala con vestimenta reglamentaria</em> (escala de 3 niveles).</li>
+          <li class="new">2.2 Condiciones de sala: <em>¿La sala se encuentra en condiciones adecuadas?</em> — Sí/No; si es No, debe explicar por qué.</li>
+          <li class="new">3.1 Simplificado a: <em>¿Hay presencia de Policía?</em> (comentario obligatorio si No).</li>
+          <li class="new">3.4 Solo <em>Puertas de emergencia despejadas</em> (comentario obligatorio si No).</li>
+          <li>Puestos críticos, cartelería, CCTV y libro de novedades con la misma lógica de comentario condicional.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Sección 4 Fidelización -->
+    <section class="block neo-card">
+      <div class="block-head">
+        <div class="icon-box" style="background: #fce4ec;">4</div>
+        <div>
+          <p class="section-num">Sección 4 — Cambio mayor</p>
+          <h2>Fidelización de clientes</h2>
+          <p>Reemplaza por completo el bloque de Parque de Máquinas y Sistemas.</p>
+        </div>
+      </div>
+      <div class="block-body">
+        <ul class="changes">
+          <li class="removed">Eliminado: capacidad operativa de máquinas, fuera de servicio por sector, jackpots y stock TITO.</li>
+          <li class="new">¿Cuántos clientes fidelizaron en el turno?</li>
+          <li class="new">¿Tuvieron algún inconveniente? (detalle si Sí)</li>
+          <li class="new">¿Sistema y PC de fidelización funcionan correctamente? (detalle si No)</li>
+          <li class="new">¿Hubo quejas de clientes vinculadas a fidelización? (detalle si Sí)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Sección 5-6 -->
+    <section class="block neo-card">
+      <div class="block-head">
+        <div class="icon-box" style="background: var(--purple-bg);">5–6</div>
+        <div>
+          <p class="section-num">Experiencia · Cierre</p>
+          <h2>Actividad comercial y cierre de turno</h2>
+        </div>
+      </div>
+      <div class="block-body">
+        <ul class="changes">
+          <li>Termómetro de ocupación en horas pico (22:00 y 02:00).</li>
+          <li class="new">Promociones: texto actualizado a <em>canje de puntos</em> (sin N/A; comentario si No).</li>
+          <li class="new">5.4 <em>¿Considerás que la atención al cliente fue rápida durante tu turno?</em> — Sí/No; si No, debe indicar por qué.</li>
+          <li class="removed">Eliminada coordinación con jefes de sector (6.1).</li>
+          <li class="new">Comentario final opcional (ya no es obligatorio informar novedades graves).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Backend -->
+    <section class="block neo-card">
+      <div class="block-head">
+        <div class="icon-box" style="background: var(--orange-bg);">📊</div>
+        <div>
+          <p class="section-num">Datos e integración</p>
+          <h2>Google Sheets actualizado</h2>
+          <p>Cada envío genera una fila con columnas alineadas al nuevo formulario, por sala.</p>
+        </div>
+      </div>
+      <div class="block-body">
+        <ul class="changes">
+          <li>Encabezados renombrados y reordenados según las secciones 0–6.</li>
+          <li>Valores legibles en planilla (ej. <em>Sí</em>, <em>Excelente</em>, <em>Alta</em> ocupación).</li>
+          <li>Pestañas separadas por sala (PASTEKO / STEPAKO).</li>
+          <li>API vía Google Apps Script — despliegue del script actualizado requerido en producción.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Beneficios -->
+    <section class="block neo-card">
+      <div class="block-head">
+        <div class="icon-box" style="background: var(--accent);">✦</div>
+        <div>
+          <p class="section-num">Impacto</p>
+          <h2>Beneficios para la operación</h2>
+        </div>
+      </div>
+      <div class="block-body">
+        <ul class="changes">
+          <li>Informes más rápidos de completar en turno (menos campos irrelevantes).</li>
+          <li>Mayor calidad en los datos: solo se pide detalle cuando hay desvío.</li>
+          <li>Visibilidad directa de fidelización, seguridad y experiencia del cliente.</li>
+          <li>Histórico estructurado en Sheets para análisis gerencial por sala y fecha.</li>
+          <li>Formulario alineado al proceso real de recorrida de guardia en gerencia.</li>
+        </ul>
+      </div>
+    </section>
+
+    <footer class="actions">
+      <a href="/" class="neo-btn">Ir al formulario</a>
+      <a href="javascript:window.print()" class="neo-btn neo-btn-accent">Imprimir / PDF</a>
+    </footer>
+
+    <p style="text-align:center; margin-top:2rem; font-size:0.7rem; font-weight:700; text-transform:uppercase; letter-spacing:0.1em; color:#999;">
+      Sistema de Registro Gerencial · Informe de guardia v2
+    </p>
+  </div>
+</body>
+</html>
